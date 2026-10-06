@@ -57,6 +57,8 @@ else()
 
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread ")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -pthread -fvisibility=hidden")
+  # GCC 14 reports a false positive in re2/prog.cc (FindNextSetBit() can't return -1 there). Upstream re2 builds without -Werror
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=array-bounds")
 
   if (EMSCRIPTEN)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -s USE_PTHREADS=1 \
